@@ -205,11 +205,12 @@ int insertLast(headNode* h, int key) {
  * list의 첫번째 노드 삭제
  */
 int deleteFirst(headNode* h) {
-	listNode* delete = h->first; //첫번째 노드를 가리키는 포인터
-	h->first = h->first->link;
-	free(delete); //첫번째 노드의 메모리 해제
+    
+	listNode* temp = h->first; // 삭제할 노드를 임시로 저장
+    h->first = h->first->link; // 첫 번째 노드를 두 번째 노드로 변경
+    free(temp); // 삭제할 노드 메모리 해제
 
-	return 0;
+    return 0;
 }
 
 
@@ -233,13 +234,15 @@ int deleteNode(headNode* h, int key) {
  * list의 마지막 노드 삭제
  */
 int deleteLast(headNode* h) {
-	for(listNode* p = h->first; p != NULL; p = p->link) {
-		if(p->link->link == NULL) {
-			free(p->link);
-			p->link = NULL;
-			return 0;
-		}
+	listNode* prev = NULL;
+	listNode* now = h->first;
+	while(now->link != NULL) {
+		prev = now;
+		now = now->link;
 	}
+	prev->link = NULL;
+	free(now);
+	
 	return 0;
 }
 
