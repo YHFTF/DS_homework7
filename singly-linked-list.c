@@ -234,17 +234,16 @@ int deleteNode(headNode* h, int key) {
  * list의 마지막 노드 삭제
  */
 int deleteLast(headNode* h) {
-	listNode* prev = NULL;
-	listNode* now = h->first;
-	while(now->link != NULL) {
-		prev = now;
-		now = now->link;
-	}
-	prev->link = NULL;
-	free(now);
-	
-	return 0;
+    for(listNode* p = h->first; p != NULL; p = p->link) {
+        if(p->link->link == NULL) {
+            free(p->link);
+            p->link = NULL;
+            return 0;
+        }
+    }
+    return 0;
 }
+
 
 
 /**
